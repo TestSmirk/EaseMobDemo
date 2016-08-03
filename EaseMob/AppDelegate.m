@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "EMSDK.h"
 @interface AppDelegate ()
 
 @end
@@ -17,6 +17,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    EMOptions *options = [EMOptions optionsWithAppkey:@"2123132#easemob"];
+    options.apnsCertName = @"istore_dev";
+    [[EMClient sharedClient] initializeSDKWithOptions:options];
     return YES;
 }
 

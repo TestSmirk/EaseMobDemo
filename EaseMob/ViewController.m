@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
-
+#import "EMSDK.h"
+#import "MainViewController.h"
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *username;
+@property (weak, nonatomic) IBOutlet UITextField *passwd;
 
 @end
 
@@ -17,6 +20,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    UINavigationController *nav = [[UINavigationController alloc]init];
+    self.view.window.rootViewController = nav;
+}
+- (IBAction)regist:(id)sender {
+   UIViewController *viewController =  [UIStoryboard storyboardWithName:@"regist" bundle:nil].instantiateInitialViewController;
+//    [self.navigationController pushViewController:viewController animated:true];
+    NSLog(@"%@",viewController);
+    [self presentViewController:viewController animated:YES completion:^{NSLog(@"call back");}];
+}
+- (IBAction)loginEaseMob:(id)sender {
+    
+    if (self.username.text.length < 1 ){
+        return;
+    }
+    if (self.passwd.text.length < 1 ){
+        return;
+    }
+    if([[EMClient sharedClient] loginWithUsername:self.username.text password:self.passwd.text]==nil){
+        [self presentViewController:[[MainViewController alloc]init] animated:true completion:^{
+        }];
+        
+         
+        NSLog(@"login succ");
+    }
 }
 
 - (void)didReceiveMemoryWarning {
